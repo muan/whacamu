@@ -1,0 +1,62 @@
+@import "bourbon/bourbon";
+
+body { 
+  font-family: "Varela Round", sans-serif;
+  color: #000;
+
+  #score {
+    margin: 30px auto;
+    width: 40%;
+    text-align: center;
+    font-size: 40px;
+  }
+
+  section.holes {
+    margin: 30px auto;
+    background: #fff;
+    width: 320px;
+    > div {
+      @include inline-block;
+      @include border-top-radius(50px);
+      @include border-bottom-radius(50px);
+      @include transition( all 0.1s );
+      overflow: hidden;
+      margin: 10px;
+      background: #e8e5e3; width: 60px; height: 60px;
+      line-height: 300px;
+      @include box-sizing( border-box );
+      &::before {
+        @include transition( all 0.1s );
+        @include border-bottom-radius(50px);
+        content: "✌";
+        color: #000;
+        text-align: center;
+        width: 60px; height: 60px;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        font-size: 60px;
+      }
+      &.hello {
+        line-height: 90px;
+        padding-top: 0;
+        background: #fab800;
+      }
+    }
+  }
+
+  #hammer {
+    font-size: 40px;
+    position: absolute;
+    top: 0; left: 0;
+    line-height: 0;
+    margin-left: -13px;
+    pointer-events: none;
+    @include transition( transform 0.05s );
+    @include transition( -webkit-transform 0.05s );
+    &.smash {
+      @include transform( rotate(-45deg) )
+    }
+  }
+
+}

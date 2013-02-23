@@ -1,0 +1,82 @@
+@charset "UTF-8";
+body {
+  font-family: "Varela Round", sans-serif;
+  color: #000; }
+  body #score {
+    margin: 30px auto;
+    width: 40%;
+    text-align: center;
+    font-size: 40px; }
+  body section.holes {
+    margin: 30px auto;
+    background: #fff;
+    width: 320px; }
+    body section.holes > div {
+      display: inline-block;
+      vertical-align: baseline;
+      zoom: 1;
+      *display: inline;
+      *vertical-align: auto;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      -webkit-transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -ms-transition: all 0.1s;
+      -o-transition: all 0.1s;
+      transition: all 0.1s;
+      overflow: hidden;
+      margin: 10px;
+      background: #e8e5e3;
+      width: 60px;
+      height: 60px;
+      line-height: 300px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
+      body section.holes > div::before {
+        -webkit-transition: all 0.1s;
+        -moz-transition: all 0.1s;
+        -ms-transition: all 0.1s;
+        -o-transition: all 0.1s;
+        transition: all 0.1s;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        content: "✌";
+        color: #000;
+        text-align: center;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        font-size: 60px; }
+      body section.holes > div.hello {
+        line-height: 90px;
+        padding-top: 0;
+        background: #fab800; }
+  body #hammer {
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 0;
+    margin-left: -13px;
+    pointer-events: none;
+    -webkit-transition: transform 0.05s;
+    -moz-transition: transform 0.05s;
+    -ms-transition: transform 0.05s;
+    -o-transition: transform 0.05s;
+    transition: transform 0.05s;
+    -webkit-transition: -webkit-transform 0.05s;
+    -moz-transition: -webkit-transform 0.05s;
+    -ms-transition: -webkit-transform 0.05s;
+    -o-transition: -webkit-transform 0.05s;
+    transition: -webkit-transform 0.05s; }
+    body #hammer.smash {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg); }
