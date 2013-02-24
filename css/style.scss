@@ -2,45 +2,97 @@
 
 body { 
   font-family: "Varela Round", sans-serif;
-  color: #000;
+  color: #45573e;
+  text-align: center;
+  background: #b5cbac;
 
   #score {
-    margin: 30px auto;
+    margin-top: 30px;
     width: 40%;
-    text-align: center;
     font-size: 40px;
   }
 
-  section.holes {
-    margin: 30px auto;
-    background: #fff;
+  section {
     width: 320px;
+    margin: 0 auto 30px;
+    @include inline-block;
+  }
+
+  section.controls {
+    a {
+      display: block;
+      cursor: pointer;
+      padding: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: #fff;
+      font-size: 80%;
+      border-bottom: 3px solid #97b58c;
+      margin: 5px 0;
+      background: #45573e;
+      height: 35px;
+      line-height: 20px;
+      overflow: hidden;
+      @include box-sizing(border-box);
+      @include transition( all 0.3s );
+      @include border-top-radius(3px);
+      @include border-bottom-radius(6px);
+      @include box-shadow(inset 0 -2px 10px rgba(0,0,0,0.2));
+      &.disabled { 
+        color: #85977f; pointer-events: none;
+        border-bottom: 3px solid #b5cbac;
+        @include box-shadow(inset 0 2px 4px rgba(0,0,0,0.4));
+        &#pauseGame::before { content: "Taking a break.."; display:block; }
+        &#startGame::before { content: "Keep Whacking!"; display:block; }
+        &#reset::before { content: "Game resetted"; display:block; }
+      }
+      &:hover { 
+      }
+    }
+  }
+
+  section.holes {
+    cursor: url('../img/blank.png') !important;
     > div {
       @include inline-block;
-      @include border-top-radius(50px);
-      @include border-bottom-radius(50px);
       @include transition( all 0.1s );
-      overflow: hidden;
-      margin: 10px;
-      background: #e8e5e3; width: 60px; height: 60px;
-      line-height: 300px;
       @include box-sizing( border-box );
+      @include border-bottom-radius(50px 25px);
+      overflow: hidden;
+      margin: 0 10px;
+      position: relative;
+      width: 60px; height: 60px;
+      padding-top: 60px;
       &::before {
+        position: absolute;
+        background: #dde8d9;
+        display: block;
+        content: " ";
+        z-index: -1;
+        width: 60px; height: 30px;
+        bottom: 0;
+        @include border-top-radius(50px 25px);
+        @include border-bottom-radius(50px 25px);
+      }
+      &::after {
         @include transition( all 0.1s );
-        @include border-bottom-radius(50px);
-        content: "✌";
-        color: #000;
+        @include border-bottom-radius(50px 25px);
+        content: " ";
+        background-image: url('../img/muuu.png');
+        background-repeat: no-repeat;
+        background-position: 50% 0px;
         text-align: center;
         width: 60px; height: 60px;
         overflow: hidden;
         display: block;
-        position: absolute;
         font-size: 60px;
       }
-      &.hello {
-        line-height: 90px;
-        padding-top: 0;
-        background: #fab800;
+      &.out {
+        padding-top: 0px;
+        &:active::after {
+          @include transform( rotate(-10deg) );
+          background-image: url('../img/muuu-dead.png');
+        }
       }
     }
   }
@@ -48,14 +100,15 @@ body {
   #hammer {
     font-size: 40px;
     position: absolute;
-    top: 0; left: 0;
+    z-index: 5;
+    top: 50%; left: 50%;
     line-height: 0;
     margin-left: -13px;
     pointer-events: none;
     @include transition( transform 0.05s );
     @include transition( -webkit-transform 0.05s );
     &.smash {
-      @include transform( rotate(-45deg) )
+      @include transform( rotate(-78deg) )
     }
   }
 

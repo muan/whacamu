@@ -5,19 +5,47 @@
   WhacAMu = (function() {
 
     function WhacAMu() {
-      var self;
       this.score = 0;
       this.scorePanel = $("#score");
+      this.field = $("section.holes");
       this.createHoles();
       this.createHammer();
+      this.bindControls();
+      this.startGame();
+      this.val = 0;
+    }
+
+    WhacAMu.prototype.bindControls = function() {
+      var self;
       self = this;
-      setInterval(function() {
-        return self.comingOut({
+      $("#startGame").click(function() {
+        return self.startGame();
+      });
+      $("#pauseGame").click(function() {
+        return self.pauseGame();
+      });
+      return $("#reset").click(function() {
+        return self.reset();
+      });
+    };
+
+    WhacAMu.prototype.changeButtonState = function(btn) {
+      $(".btn").removeClass("disabled");
+      return $(btn).addClass("disabled");
+    };
+
+    WhacAMu.prototype.startGame = function() {
+      var self;
+      self = this;
+      this.gameStarted = true;
+      this.muuuu();
+      this.randomMu = setInterval(function() {
+        return self.muuuu({
           noTrigger: true
         });
       }, 5000);
-      this.comingOut();
-    }
+      return this.changeButtonState("#startGame");
+    };
 
     WhacAMu.prototype.createHoles = function() {
       var i, _results;
@@ -25,30 +53,52 @@
       _results = [];
       while (i < 16) {
         i++;
-        _results.push($("section.holes").append("<div class=\"hole\"></div>"));
+        _results.push(this.field.append("<div class=\"hole\"></div>"));
       }
       return _results;
     };
 
-    WhacAMu.prototype.comingOut = function(options) {
-      var mu, val;
+    WhacAMu.prototype.getRandom = function(last_muuu) {
+      var val;
       val = _.random(0, $(".hole").length - 1);
-      mu = $(".hole").eq(val).addClass("hello");
-      return this.bindWhack(mu, options);
+      while (val === last_muuu) {
+        val = _.random(0, $(".hole").length - 1);
+      }
+      return val;
+    };
+
+    WhacAMu.prototype.muuuu = function(options) {
+      var mu, self;
+      self = this;
+      if (this.gameStarted) {
+        this.val = this.getRandom(this.val);
+        mu = $(".hole").eq(self.val).addClass("out");
+        return this.bindWhack(mu, options);
+      }
     };
 
     WhacAMu.prototype.createHammer = function() {
+      var self;
+      self = this;
       $(window).bind("mousemove", function(e) {
-        return $("#hammer").css({
-          "top": e.pageY,
-          "left": e.pageX
-        });
+        var inField;
+        inField = e.pageY > self.field.position().top && e.pageX > self.field.position().left && e.pageY < (self.field.position().top + self.field.height()) && e.pageX < (self.field.position().left + self.field.width());
+        if (inField) {
+          return $("#hammer").css({
+            "top": e.pageY,
+            "left": e.pageX
+          });
+        }
       });
       return $(window).bind("click", function(e) {
-        $("#hammer").addClass("smash");
-        return setTimeout(function() {
-          return $("#hammer").removeClass("smash");
-        }, 200);
+        var inField;
+        inField = e.pageY > self.field.position().top && e.pageX > self.field.position().left && e.pageY < (self.field.position().top + self.field.height()) && e.pageX < (self.field.position().left + self.field.width());
+        if (inField) {
+          $("#hammer").addClass("smash");
+          return setTimeout(function() {
+            return $("#hammer").removeClass("smash");
+          }, 200);
+        }
       });
     };
 
@@ -57,16 +107,18 @@
       self = this;
       options = $.extend({}, options);
       newtime = setTimeout(function() {
-        mu.removeClass("hello").unbind("click");
-        if (!options.noTrigger) {
-          self.comingOut();
+        if (mu.is(".out")) {
+          self.updateScore(-10);
         }
-        return self.updateScore(-10);
+        mu.removeClass("out").unbind("click");
+        if (!options.noTrigger) {
+          return self.muuuu();
+        }
       }, 2000);
       return mu.bind("click", function() {
-        mu.removeClass("hello").unbind("click");
+        mu.removeClass("out").unbind("click");
         if (!options.noTrigger) {
-          self.comingOut();
+          self.muuuu();
         }
         self.updateScore(+10);
         return clearTimeout(newtime);
@@ -76,6 +128,21 @@
     WhacAMu.prototype.updateScore = function(score) {
       this.score = this.score + score;
       return this.scorePanel.html(this.score);
+    };
+
+    WhacAMu.prototype.pauseGame = function() {
+      var self;
+      self = this;
+      $(".hole").removeClass("out");
+      clearInterval(self.randomMu);
+      this.gameStarted = false;
+      return this.changeButtonState("#pauseGame");
+    };
+
+    WhacAMu.prototype.reset = function() {
+      this.updateScore(0 - this.score);
+      this.pauseGame();
+      return this.changeButtonState("#reset");
     };
 
     return WhacAMu;
