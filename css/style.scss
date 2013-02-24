@@ -90,7 +90,7 @@ body {
       &.out {
         padding-top: 0px;
         &:active::after {
-          @include transform( rotate(-10deg) );
+          @include transform( rotate(-15deg) );
           background-image: url('../img/muuu-dead.png');
         }
       }

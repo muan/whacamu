@@ -58,9 +58,9 @@ class WhacAMu
     $(window).bind "click", ( e ) ->
       inField = e.pageY > self.field.position().top && e.pageX > self.field.position().left && e.pageY < (self.field.position().top + self.field.height()) &&  e.pageX < (self.field.position().left + self.field.width())
       if inField
-        $("#hammer").addClass("smash")
+        $("#hammer").addClass("smash").find("img").attr("src", "img/hammering.png")
         setTimeout () ->
-          $("#hammer").removeClass("smash")
+          $("#hammer").removeClass("smash").find("img").attr("src", "img/hammer.png")
         , 200
 
   bindWhack: ( mu, options ) ->

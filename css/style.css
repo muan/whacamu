@@ -114,11 +114,11 @@ body {
       body section.holes > div.out {
         padding-top: 0px; }
         body section.holes > div.out:active::after {
-          -webkit-transform: rotate(-10deg);
-          -moz-transform: rotate(-10deg);
-          -ms-transform: rotate(-10deg);
-          -o-transform: rotate(-10deg);
-          transform: rotate(-10deg);
+          -webkit-transform: rotate(-15deg);
+          -moz-transform: rotate(-15deg);
+          -ms-transform: rotate(-15deg);
+          -o-transform: rotate(-15deg);
+          transform: rotate(-15deg);
           background-image: url("../img/muuu-dead.png"); }
   body #hammer {
     font-size: 40px;
