@@ -1,6 +1,6 @@
 Whac-A-Mu
 =========
 
-Slow down, one at a time.
+Created by [@muanchiou](http://twitter.com/muanchiou) using time she should have spent doing things FAR more important than whacking a mole.
 
-Whac-a-mu is created by @muanchiou using time she should have spent doing things FAR more important than whacking a mole.
+Whacking starts here: [muan.co/whacamu](http://muan.co/whacamu)
