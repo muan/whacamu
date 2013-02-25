@@ -6,10 +6,15 @@ body {
   text-align: center;
   background: #b5cbac;
 
-  #score {
+  .panel {
+    line-height: 30px;
     margin-top: 30px;
-    width: 40%;
-    font-size: 40px;
+    #score {
+      &::after { content: " points" }
+    }
+    #timer {
+      &::after { content: " seconds left" }
+    }
   }
 
   section {
@@ -94,6 +99,14 @@ body {
           background-image: url('../img/muuu-dead.png');
         }
       }
+    }
+  }
+
+  section#by {
+    &, * {
+      font-size: 13px;
+      text-decoration: none;
+      color: inherit;
     }
   }
 

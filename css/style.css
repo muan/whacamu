@@ -3,10 +3,13 @@ body {
   color: #45573e;
   text-align: center;
   background: #b5cbac; }
-  body #score {
-    margin-top: 30px;
-    width: 40%;
-    font-size: 40px; }
+  body .panel {
+    line-height: 30px;
+    margin-top: 30px; }
+    body .panel #score::after {
+      content: " points"; }
+    body .panel #timer::after {
+      content: " seconds left"; }
   body section {
     width: 320px;
     margin: 0 auto 30px;
@@ -120,6 +123,10 @@ body {
           -o-transform: rotate(-15deg);
           transform: rotate(-15deg);
           background-image: url("../img/muuu-dead.png"); }
+  body section#by, body section#by * {
+    font-size: 13px;
+    text-decoration: none;
+    color: inherit; }
   body #hammer {
     font-size: 40px;
     position: absolute;

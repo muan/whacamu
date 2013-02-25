@@ -1,14 +1,32 @@
 class WhacAMu
 
-  constructor: () ->
+  constructor: ( timeLimit ) ->
     @score = 0
+    @timeLimit = @timeRemain = timeLimit
     @scorePanel = $("#score")
+    @timerPanel = $("#timer")
     @field = $("section.holes")
     @createHoles()
     @createHammer()
     @bindControls()
     @startGame()
     @val = 0
+    @timerPanel.html( timeLimit )
+
+  timingDownFrom: ( secs ) ->
+    self = @
+    @countDown = setInterval () ->
+      self.timeRemain = self.timeRemain  - 1
+      self.timerPanel.html( self.timeRemain )
+      self.timeOut() if self.timeRemain == 0
+    , 850
+
+  timeOut: () ->
+    self = @
+    @pauseGame()
+    @timeRemain = @timeLimit
+    clearInterval @countDown
+    _gaq.push ["_trackEvent", "Game play", self.score, "score"]
 
   bindControls: () ->
     self = @
@@ -22,12 +40,15 @@ class WhacAMu
 
   startGame: ( ) ->
     self = @
+    @updateScore ( (0 - @score) ) if @timeRemain == @timeLimit
     @gameStarted = true
     @muuuu()
     @randomMu = setInterval () ->
       self.muuuu( {noTrigger: true} )
     , 5000
     @changeButtonState( "#startGame" )
+    @timerPanel.html( self.timeRemain )
+    @timingDownFrom( @timeRemain )
 
   createHoles: () ->
     i = 0
@@ -88,11 +109,24 @@ class WhacAMu
     clearInterval( self.randomMu )
     @gameStarted = false
     @changeButtonState( "#pauseGame" )
+    clearInterval @countDown
 
   reset: ( ) ->
+    self = @
     @updateScore( (0 - @score) )
+    @timerPanel.html( self.timeRemain = self.timeLimit )
     @pauseGame()
     @changeButtonState( "#reset" )
 
 jQuery -> 
-  new WhacAMu
+  new WhacAMu 60
+
+  $.each $("a[id]"), (index, ele) ->
+    $(ele).click (e) ->
+      e.stopImmediatePropagation()
+      _gaq.push ["_trackEvent", "Game", e.target.id, "actions"]
+  $.each $("a:not([id])"), (index, ele) ->
+    $(ele).click (e) ->
+      e.stopImmediatePropagation()
+      _gaq.push ["_trackEvent", "Click links", e.currentTarget.href, "links"]
+

@@ -4,16 +4,40 @@
 
   WhacAMu = (function() {
 
-    function WhacAMu() {
+    function WhacAMu(timeLimit) {
       this.score = 0;
+      this.timeLimit = this.timeRemain = timeLimit;
       this.scorePanel = $("#score");
+      this.timerPanel = $("#timer");
       this.field = $("section.holes");
       this.createHoles();
       this.createHammer();
       this.bindControls();
       this.startGame();
       this.val = 0;
+      this.timerPanel.html(timeLimit);
     }
+
+    WhacAMu.prototype.timingDownFrom = function(secs) {
+      var self;
+      self = this;
+      return this.countDown = setInterval(function() {
+        self.timeRemain = self.timeRemain - 1;
+        self.timerPanel.html(self.timeRemain);
+        if (self.timeRemain === 0) {
+          return self.timeOut();
+        }
+      }, 850);
+    };
+
+    WhacAMu.prototype.timeOut = function() {
+      var self;
+      self = this;
+      this.pauseGame();
+      this.timeRemain = this.timeLimit;
+      clearInterval(this.countDown);
+      return _gaq.push(["_trackEvent", "Game play", self.score, "score"]);
+    };
 
     WhacAMu.prototype.bindControls = function() {
       var self;
@@ -37,6 +61,9 @@
     WhacAMu.prototype.startGame = function() {
       var self;
       self = this;
+      if (this.timeRemain === this.timeLimit) {
+        this.updateScore(0 - this.score);
+      }
       this.gameStarted = true;
       this.muuuu();
       this.randomMu = setInterval(function() {
@@ -44,7 +71,9 @@
           noTrigger: true
         });
       }, 5000);
-      return this.changeButtonState("#startGame");
+      this.changeButtonState("#startGame");
+      this.timerPanel.html(self.timeRemain);
+      return this.timingDownFrom(this.timeRemain);
     };
 
     WhacAMu.prototype.createHoles = function() {
@@ -136,11 +165,15 @@
       $(".hole").removeClass("out");
       clearInterval(self.randomMu);
       this.gameStarted = false;
-      return this.changeButtonState("#pauseGame");
+      this.changeButtonState("#pauseGame");
+      return clearInterval(this.countDown);
     };
 
     WhacAMu.prototype.reset = function() {
+      var self;
+      self = this;
       this.updateScore(0 - this.score);
+      this.timerPanel.html(self.timeRemain = self.timeLimit);
       this.pauseGame();
       return this.changeButtonState("#reset");
     };
@@ -150,7 +183,19 @@
   })();
 
   jQuery(function() {
-    return new WhacAMu;
+    new WhacAMu(60);
+    $.each($("a[id]"), function(index, ele) {
+      return $(ele).click(function(e) {
+        e.stopImmediatePropagation();
+        return _gaq.push(["_trackEvent", "Game", e.target.id, "actions"]);
+      });
+    });
+    return $.each($("a:not([id])"), function(index, ele) {
+      return $(ele).click(function(e) {
+        e.stopImmediatePropagation();
+        return _gaq.push(["_trackEvent", "Click links", e.currentTarget.href, "links"]);
+      });
+    });
   });
 
 }).call(this);
