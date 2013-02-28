@@ -9,7 +9,7 @@ class WhacAMu
     @createHoles()
     @createHammer()
     @bindControls()
-    @startGame()
+    @pauseGame()
     @val = 0
     @timerPanel.html( timeLimit )
 

@@ -13,7 +13,7 @@
       this.createHoles();
       this.createHammer();
       this.bindControls();
-      this.startGame();
+      this.pauseGame();
       this.val = 0;
       this.timerPanel.html(timeLimit);
     }
