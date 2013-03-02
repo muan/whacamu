@@ -5,4 +5,4 @@ Created by [@muanchiou](http://twitter.com/muanchiou) using time she should have
 
 Whacking starts here: [muan.co/whacamu](http://muan.co/whacamu)
 
-Benchmark score: 700/min, by me. BEAT ME!
+Benchmark score: <del>700</del> 800/min, by me. BEAT ME!
