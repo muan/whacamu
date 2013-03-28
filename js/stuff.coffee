@@ -25,7 +25,7 @@ class WhacAMu
     self = @
     @pauseGame()
     @timeRemain = @timeLimit
-    _gaq.push ["_trackEvent", "Game", "Played", self.score.toString()]
+    _gaq.push ["_trackEvent", "Game played", "Got" + self.score + " points"]
     clearInterval @countDown
 
   bindControls: () ->
