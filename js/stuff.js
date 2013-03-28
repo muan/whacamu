@@ -35,7 +35,7 @@
       self = this;
       this.pauseGame();
       this.timeRemain = this.timeLimit;
-      _gaq.push(["_trackEvent", "Game play", self.score, "score"]);
+      _gaq.push(["_trackEvent", "Game play", "Got " + self.score]);
       return clearInterval(this.countDown);
     };
 
