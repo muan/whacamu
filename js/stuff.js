@@ -35,8 +35,8 @@
       self = this;
       this.pauseGame();
       this.timeRemain = this.timeLimit;
-      clearInterval(this.countDown);
-      return _gaq.push(["_trackEvent", "Game play", self.score, "score"]);
+      _gaq.push(["_trackEvent", "Game play", self.score, "score"]);
+      return clearInterval(this.countDown);
     };
 
     WhacAMu.prototype.bindControls = function() {
@@ -183,7 +183,7 @@
   })();
 
   jQuery(function() {
-    new WhacAMu(60);
+    new WhacAMu(3);
     $.each($("a[id]"), function(index, ele) {
       return $(ele).click(function(e) {
         e.stopImmediatePropagation();

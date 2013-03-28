@@ -25,8 +25,8 @@ class WhacAMu
     self = @
     @pauseGame()
     @timeRemain = @timeLimit
-    clearInterval @countDown
     _gaq.push ["_trackEvent", "Game play", self.score, "score"]
+    clearInterval @countDown
 
   bindControls: () ->
     self = @
@@ -119,7 +119,7 @@ class WhacAMu
     @changeButtonState( "#reset" )
 
 jQuery -> 
-  new WhacAMu 60
+  new WhacAMu 3
 
   $.each $("a[id]"), (index, ele) ->
     $(ele).click (e) ->
