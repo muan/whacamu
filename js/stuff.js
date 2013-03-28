@@ -35,7 +35,7 @@
       self = this;
       this.pauseGame();
       this.timeRemain = this.timeLimit;
-      _gaq.push(["_trackEvent", "Game play", "Got " + self.score]);
+      _gaq.push(["_trackEvent", "Game play", "Got " + self.score + " points"]);
       return clearInterval(this.countDown);
     };
 
@@ -183,7 +183,7 @@
   })();
 
   jQuery(function() {
-    new WhacAMu(3);
+    new WhacAMu(60);
     $.each($("a[id]"), function(index, ele) {
       return $(ele).click(function(e) {
         e.stopImmediatePropagation();
